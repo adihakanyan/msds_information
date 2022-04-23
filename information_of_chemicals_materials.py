@@ -10,7 +10,6 @@ def start_search():
     """
 
     search = user_input_material()
-    print()
     quit_program(search)
     parameters = params(search)
     google_soup_driver = creat_beautifulSoup_google(parameters)
@@ -19,10 +18,9 @@ def start_search():
     scrolling_pade(driver)
     soup_driver = creat_beautifulSoup_website(driver)
     data = extricate_data_form_beautiful(soup_driver)
-    print(data)
+    print(f"\n{data}\n")
     write_data_to_file(data, search)
     close_driver(driver)
-    print()
     start_search()
 
 
@@ -38,29 +36,29 @@ def extricate_data_form_beautiful(soup_driver):
     # section 3
     data = Separation_between_sections(data, 3)
     names_to_find_3 = ["Potential Health Effects", "Eye:", "Skin:", "Ingestion:", "Inhalation:", "Chronic:"]
-    data = extricate_info_from_Section(soup_driver, data, 3, names_to_find_3)
+    data = extricate_info_from_section(soup_driver, data, 3, names_to_find_3)
 
     # section 4
     data = Separation_between_sections(data, 4)
     names_to_find_4 = ["Eyes:", "Skin:", "Ingestion:", "Inhalation:", "Notes to Physician:"]
-    data = extricate_info_from_Section(soup_driver, data, 4, names_to_find_4)
+    data = extricate_info_from_section(soup_driver, data, 4, names_to_find_4)
 
     # section 5
     data = Separation_between_sections(data, 5)
     names_to_find_5 = ["NFPA Rating:"]
-    data = extricate_info_from_Section(soup_driver, data, 5, names_to_find_5)
+    data = extricate_info_from_section(soup_driver, data, 5, names_to_find_5)
 
     # section 9
     data = Separation_between_sections(data, 9)
     names_to_find_9 = ["Physical State:", "Vapor Pressure:", "Boiling Point:", "Solubility:",
                        "Specific Gravity/Density:",
                        "Molecular Formula:", "Molecular Weight:"]
-    data = extricate_info_from_Section(soup_driver, data, 9, names_to_find_9)
+    data = extricate_info_from_section(soup_driver, data, 9, names_to_find_9)
 
     return data
 
 
-def extricate_info_from_Section(soup_driver, data, section_number, names_to_find):
+def extricate_info_from_section(soup_driver, data, section_number, names_to_find):
     """The function extricate specific information('names_to_find') from the driver('soup_driver') in a specific section
     ('section').
 
